@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+
+  wordpress:
+    container_name: lemontvme_wp
+    image: wordpress
+    restart: always
+    ports:
+      - 8085:80
+    environment:
+      WORDPRESS_DB_HOST: lemontvme_db
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_CONFIG_EXTRA: |
+        - define('FORCE_SSL_ADMIN', false);
+        - define('WP_HOME', '${WP_HOME}');
+        - define('WP_SITEURL', '${WP_SITEURL}');
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+
+  db:
+    container_name: lemontvme_db
+    image: mysql
+    restart: always
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01.sql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'

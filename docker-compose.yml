@@ -3,13 +3,13 @@ version: '3.9'
 services:
 
   wordpress:
-    container_name: lemontvme_wp
+    container_name: docker_wp
     image: wordpress
     restart: always
     ports:
       - 8085:80
     environment:
-      WORDPRESS_DB_HOST: lemontvme_db
+      WORDPRESS_DB_HOST: docker_db
       WORDPRESS_DB_NAME: ${DB_NAME}
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
@@ -21,7 +21,7 @@ services:
       - ./wp-content:/var/www/html/wp-content
 
   db:
-    container_name: lemontvme_db
+    container_name: docker_db
     image: mysql
     restart: always
     volumes:
@@ -30,4 +30,4 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} 

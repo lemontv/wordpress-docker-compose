@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Check if .env already exists
+if [ -f ".env" ]; then
+    echo "Error: .env file already exists."
+    exit 1
+fi
+
+# Check if nginx.conf already exists
+if [ -f "nginx.conf" ]; then
+    echo "Error: nginx.conf file already exists."
+    exit 1
+fi
+
 # Set default values
 default_port="8080"
 default_domain="localhost"

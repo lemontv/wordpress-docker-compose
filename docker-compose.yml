@@ -1,15 +1,13 @@
-version: '3.9'
+version: "3.9"
 
 services:
-
   wordpress:
-    container_name: docker_wp
     image: wordpress
     restart: always
     ports:
-      - 8085:80
+      - ${PORT}:80
     environment:
-      WORDPRESS_DB_HOST: docker_db
+      WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_NAME: ${DB_NAME}
       WORDPRESS_DB_USER: ${DB_USER}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
@@ -20,14 +18,15 @@ services:
     volumes:
       - ./wp-content:/var/www/html/wp-content
 
-  db:
-    container_name: docker_db
+  mysql:
     image: mysql
     restart: always
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/01.sql
+      - ./data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD} 
+      MYSQL_PWD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}

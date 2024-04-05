@@ -1,21 +1,17 @@
-# Portable workpress docker compose
+# Portable wordpress docker compose
 
-## docker-compose.yml
+## Setup up the project
 
-- Update wordpress container_name
-- Update wodpress 8085 port
-- Update docker_db to macth db container_name
-- Update db container_name
+Run the setup script
 
-## .env
+```
+./setup
+```
 
-- Update WP_HOME/WP_SITEURL to match website domain
-- Generate random password for DB_PASSWORD `openssl rand -base64 24`
+Enter the port and domain for the website
 
-## init.sql
+## Recover the site from backup files
 
-- Replace init.sql with dumped mysql database
-
-## wp-content
-
-- Replace wp-content
+Replace init.sql with dumped mysql database
+Replace wp-content with backup wordpress contents
+After the site is up, remove the init.sql file
